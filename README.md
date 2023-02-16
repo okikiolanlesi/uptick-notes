@@ -1,11 +1,11 @@
 ## Uptick Notes App
-**Link to postman documentation [here](https://documenter.getpostman.com/view/22751768/2s93CGRFUE)**
-**Link to hosted site [here](https://uptick-notes-api.onrender.com)**
+Link to postman documentation [here](https://documenter.getpostman.com/view/22751768/2s93CGRFUE)
 
-**Entry Point:** server.js
+Link to hosted site [here](https://uptick-notes-api.onrender.com)
 
-#### Prerequisite
-* have node installed on your computer
+
+### Prerequisite
+* Have node installed on your computer
 
 ### How to run
 * Copy the project to your local machine

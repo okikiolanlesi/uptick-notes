@@ -34,7 +34,8 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json({
     status: "success",
     message: "Welcome to the uptick-notes API",
-    linkToDocumentation: "",
+    linkToDocumentation:
+      "https://documenter.getpostman.com/view/22751768/2s93CGRFUE",
   });
 });
 

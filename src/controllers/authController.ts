@@ -6,13 +6,13 @@ import { promisify } from "util";
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/AppError";
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
   user: IUser;
 }
 
 const signToken = (id: string) =>
-  jwt.sign({ id }, config.jwt.expiresIn, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+  jwt.sign({ id }, config.jwt.secret, {
+    expiresIn: config.jwt.expiresIn,
   });
 const createSendToken = (
   res: Response,
@@ -98,11 +98,27 @@ export const protect = catchAsync(
     interface IDecoded extends JwtPayload {
       id?: string;
     }
-    const decodedData: any = jwt.verify(token, config.jwt.secret);
+    // console.log(config.jwt.secret);
+    const jwtVerifyPromisified = (token: string, secret: string) => {
+      return new Promise((resolve, reject) => {
+        jwt.verify(token, secret, {}, (err, payload) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(payload);
+          }
+        });
+      });
+    };
+
+    const decodedData: any = await jwtVerifyPromisified(
+      token,
+      config.jwt.secret
+    );
 
     if (!decodedData) return next(new AppError("Invalid data", 401));
 
-    const user = await User.findById(decodedData.id);
+    const user = await User.findById((decodedData as IDecoded).id);
 
     if (!user) return next(new AppError("Please login", 401));
 

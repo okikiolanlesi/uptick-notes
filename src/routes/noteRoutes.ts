@@ -1,8 +1,18 @@
-// import express from "express";
-// import { login, signup } from "../controllers/noteController";
-// const router = express.Router();
+import express from "express";
+import {
+  getAllNotes,
+  getNote,
+  createNote,
+  updateNote,
+  deleteNote,
+} from "../controllers/noteController";
 
-// router.post("/signup", signup);
-// router.post("/login", login);
+import { protect } from "../controllers/authController";
+const router = express.Router();
+router.use(protect);
 
-// export default router;
+router.route("/").get(getAllNotes).post(createNote);
+
+router.route("/:id").get(getNote).patch(updateNote).delete(deleteNote);
+
+export default router;

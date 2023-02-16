@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand --coverage --detectOpenHandles",
-    "start:prod": "cross-env NODE_ENV=production node ./dist/server.js",
-    "build": "cross-env NODE_ENV=production tsc",
-    "start": "npm run build && npm run start:prod",
-    "dev": "cross-env NODE_ENV=development nodemon ./src/server.ts",
+    "start": "node ./dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon ./src/server.ts",
     "start:dev": "ts-node-dev ./src/server.ts"
   },
   "keywords": [],

@@ -47,7 +47,6 @@ export const getNote = catchAsync(
       return next(new AppError("No note found with this id", 404));
     }
 
-    console.log(note.owner.id, req.user.id);
     if (note?.owner.id != req.user.id) {
       return next(new AppError("You are not authorized to get this note", 404));
     }
@@ -67,9 +66,16 @@ export const updateNote = catchAsync(
 
     delete req.body.owner;
 
-    const updatedNote = await Note.findOneAndUpdate({
-      $and: [{ id }, { owner: req.user._id }],
-    });
+    const updatedNote = await Note.findOneAndUpdate(
+      {
+        $and: [{ _id: id }, { owner: req.user._id }],
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updatedNote) {
       return next(new AppError("No note found with this id", 404));
@@ -91,18 +97,13 @@ export const deleteNote = catchAsync(
     delete req.body.owner;
 
     const deletedNote = await Note.findOneAndDelete({
-      $and: [{ id }, { owner: req.user._id }],
+      $and: [{ _id: id }, { owner: req.user._id }],
     });
 
     if (!deletedNote) {
       return next(new AppError("No note found with this id", 404));
     }
 
-    res.status(204).json({
-      status: "success",
-      data: {
-        deletedNote,
-      },
-    });
+    res.status(204).json({});
   }
 );

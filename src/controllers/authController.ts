@@ -98,7 +98,7 @@ export const protect = catchAsync(
     interface IDecoded extends JwtPayload {
       id?: string;
     }
-    // console.log(config.jwt.secret);
+
     const jwtVerifyPromisified = (token: string, secret: string) => {
       return new Promise((resolve, reject) => {
         jwt.verify(token, secret, {}, (err, payload) => {

@@ -23,7 +23,7 @@ const createSendToken = (
   const token = signToken(user._id);
 
   const cookieOptions: any = {
-    maxAge: config.cookieExpiresIn * 24 * 60 * 60 * 1000,
+    maxAge: config.cookieExpiresIn * 60 * 60 * 1000,
     // httpOnly: true means that the cookie cannot be accessed or modified in any way by the browser
     httpOnly: true,
     sameSite: "none",
